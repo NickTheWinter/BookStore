@@ -10,6 +10,7 @@ namespace BookStore
     {
         static void Main(string[] args)
         {
+            Interface.MainWrite();
         }
     }
 }
