@@ -53,7 +53,7 @@ namespace BookStore
                     break;
                 case "2":
                     if (mainChoice == "1")
-                        Console.WriteLine("\nВведите новое наименование.\n" + Enumerations.Write(choice, Read()));
+                        Console.WriteLine("\nВведите новое наименование.\n" + Authors.Add(Read()));
                     break;
                 case "3":
 

@@ -14,17 +14,10 @@ namespace BookStore
         static string errorMessage = "Перечисление не было изменено!";
         static string successMessage = "Перечисление было изменено!";*/
     }
-    class Authors
+    internal class Authors
     {
         static List<string> authors = new List<string>();
-        static string IdString(string item)
-        {
-            string id = authors.IndexOf(item).ToString();
-            for (int i = id.Length; i <= authors.Count.ToString().Length; i++)
-                id += " ";
-            return id;
-        }
-        static bool Add(string name)
+        public static bool Add(string name)
         {
             if (!authors.Contains(name))
             {
@@ -33,14 +26,22 @@ namespace BookStore
             }
             return false;
         }
-        static string Read()
+        public static string Read()
         {
             string table = "";
             foreach (string item in authors)
-                table += $" {IdString(item)} | {item}\n";
+                table += Templates.Enum(item, authors);
             return table;
         }
-        static bool Change(string idString, string name)
+        public static string Select(string id, string set)
+        {
+            string table = "";
+            foreach (string item in authors)
+                if (authors.IndexOf(item).ToString().Contains(id) & item.ToLower().Contains(set))
+                    table += Templates.Enum(item, authors);
+            return table;
+        }
+        public static bool Change(string idString, string name)
         {
             try
             {
@@ -53,10 +54,10 @@ namespace BookStore
                 }
             }
             catch (FormatException) { }
-            catch (IndexOutOfRangeException) { }
+            catch (ArgumentOutOfRangeException) { }
             return false;
         }
-        static bool Remove(string idString)
+        public static bool Remove(string idString)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace BookStore
                 return true;
             }
             catch (FormatException) { }
-            catch (IndexOutOfRangeException) { }
+            catch (ArgumentOutOfRangeException) { }
             return false;
         }
     }
