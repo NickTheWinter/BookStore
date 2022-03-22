@@ -37,7 +37,7 @@ namespace BookStore
         {
             string table = "";
             foreach (string item in authors)
-                if (authors.IndexOf(item).ToString().Contains(id) & item.ToLower().Contains(set))
+                if (authors.IndexOf(item).ToString().Contains(id) & item.ToLower().Contains(set.ToLower()))
                     table += Templates.Enum(item, authors);
             return table;
         }
