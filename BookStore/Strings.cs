@@ -8,6 +8,13 @@ namespace BookStore
 {
     internal class Strings
     {
+        static string nameChars = "ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮйцукенгшщзхъфывапролджэячсмитьбю- ";
+        public static bool IsName(char c)
+        {
+            if (nameChars.Contains(c.ToString()))
+                return true;
+            return false;
+        }
     }
     internal class Templates
     {

@@ -8,18 +8,120 @@ namespace BookStore
 {
     internal class Database
     {
-        /*static string repeatNameException = $"Такой элемент уже существует! {errorMessage}";
-        static string repeatIdException = $"Такой id уже используется! {errorMessage}";
-        static string outOfRangeException = $"Вы вышли за пределы допустимых значений id! {errorMessage}";
-        static string errorMessage = "Перечисление не было изменено!";
-        static string successMessage = "Перечисление было изменено!";*/
+
+    }
+    internal class CheckConstraints
+    {
+        public static bool CorrectName(string name, out string returned)
+        {
+            returned = "";
+            string[] subs = name.Split(' ');
+            foreach (string s in subs)
+            {
+                if (s == "")
+                    continue;
+                else if (s[0] == '-' & returned != "")
+                {
+                    for (int i = returned.Length - 1; i >= 0; i--)
+                        if (returned[i] == '-' | returned[i] == ' ')
+                            returned = returned.Remove(i);
+                        else break;
+                    for (int i = 0; i < s.Length; i++)
+                        returned += s[i].ToString().ToLower();
+                }
+                else if (s[0] == '-' & returned == "")
+                {
+                    for (int i = 0; i < s.Length; i++)
+                        if (s[i] != '-')
+                        {
+                            returned += s[i].ToString().ToUpper();
+                            for (int k = i + 1; k < s.Length; k++)
+                                returned += s[k].ToString().ToLower();
+                            break;
+                        }
+                }
+                else
+                { 
+                    try
+                    {
+                        if (returned[returned.Length - 2] == '-')
+                        {
+                            returned = returned.Remove(returned.Length - 1);
+                            for (int i = 0; i < s.Length; i++)
+                                returned += s[i].ToString().ToLower();
+                        }
+                        else
+                        {
+                            returned += s[0].ToString().ToUpper();
+                            for (int i = 1; i < s.Length; i++)
+                                returned += s[i].ToString().ToLower();
+                        }
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        returned += s[0].ToString().ToUpper();
+                        for (int i = 1; i < s.Length; i++)
+                            returned += s[i].ToString().ToLower();
+                    }
+                }
+                returned += " ";
+            }
+            try
+            {
+                for (int i = 0; i < returned.Length; i++)
+                    if (returned[i] == '-' & returned[i] == returned[i + 1])
+                        returned = returned.Remove(i, 1);
+            }
+            catch (IndexOutOfRangeException) { }
+            foreach (char c in name)
+                if (!Strings.IsName(c))
+                    return false;
+            if (returned == "")
+                return false;
+            return true;
+        }
+        public static bool CorrectPrice(string price)
+        {
+            try
+            {
+                double priceDouble = Convert.ToDouble(price);
+                if (priceDouble == Math.Round(priceDouble, 2) & priceDouble > 0)
+                    return true;
+            }
+            catch (FormatException) { }
+            return false;
+        }
+        public static bool CorrectYear(string year)
+        {
+            try
+            {
+                int yearInt = Convert.ToInt32(year);
+                if (yearInt <= DateTime.Now.Year & yearInt > 0)
+                    return true;
+            }
+            catch (FormatException) { }
+            return false;
+        }
+        public static bool CorrectCount(string count)
+        {
+            try
+            {
+                int countInt = Convert.ToInt32(count);
+                if (countInt > 0)
+                    return true;
+            }
+            catch (FormatException) { }
+            return false;
+        }
     }
     internal class Authors
     {
         static List<string> authors = new List<string>();
+        public static bool Contains(string item) =>
+            authors.Contains(item);
         public static bool Add(string name)
         {
-            if (!authors.Contains(name))
+            if (CheckConstraints.CorrectName(name, out name) & !Contains(name))
             {
                 authors.Add(name);
                 return true;
@@ -73,9 +175,11 @@ namespace BookStore
     internal class Persons
     {
         static List<string> persons = new List<string>();
+        public static bool Contains(string item) =>
+            persons.Contains(item);
         public static bool Add(string name)
         {
-            if (!persons.Contains(name))
+            if (CheckConstraints.CorrectName(name, out name) & !persons.Contains(name))
             {
                 persons.Add(name);
                 return true;
@@ -129,9 +233,11 @@ namespace BookStore
     internal class Publishers
     {
         static List<string> publishers = new List<string>();
+        public static bool Contains(string item) =>
+            publishers.Contains(item);
         public static bool Add(string name)
         {
-            if (!publishers.Contains(name))
+            if (!Contains(name))
             {
                 publishers.Add(name);
                 return true;
@@ -182,5 +288,27 @@ namespace BookStore
             return false;
         }
     }
-
+    internal class Books
+    {
+        static List<string[]> books = new List<string[]>();
+        public static bool CorrectEntry(string[] entry)
+        {
+            if (Authors.Contains(entry[1]) &
+                CheckConstraints.CorrectPrice(entry[2]) &
+                Publishers.Contains(entry[3]) &
+                CheckConstraints.CorrectYear(entry[4]) &
+                CheckConstraints.CorrectCount(entry[5]))
+                return true;
+            return false;
+        }
+        public static bool Add(string[] entry)
+        {
+            if (CorrectEntry(entry))
+            {
+                books.Add(entry);
+                return true;
+            }
+            return false;
+        }
+    }
 }
