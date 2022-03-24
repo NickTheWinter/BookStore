@@ -128,13 +128,8 @@ namespace BookStore
             }
             return false;
         }
-        public static string Read()
-        {
-            string table = "";
-            foreach (string item in authors)
-                table += Templates.Enum(item, authors);
-            return table;
-        }
+        public static string Read() =>
+            Select("", "");
         public static string Select(string id, string set)
         {
             string table = "";
@@ -186,13 +181,8 @@ namespace BookStore
             }
             return false;
         }
-        public static string Read()
-        {
-            string table = "";
-            foreach (string item in persons)
-                table += Templates.Enum(item, persons);
-            return table;
-        }
+        public static string Read() =>
+            Select("", "");
         public static string Select(string id, string set)
         {
             string table = "";
@@ -244,13 +234,8 @@ namespace BookStore
             }
             return false;
         }
-        public static string Read()
-        {
-            string table = "";
-            foreach (string item in publishers)
-                table += Templates.Enum(item, publishers);
-            return table;
-        }
+        public static string Read() =>
+            Select("", "");
         public static string Select(string id, string set)
         {
             string table = "";
