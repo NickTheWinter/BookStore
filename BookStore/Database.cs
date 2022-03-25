@@ -337,22 +337,20 @@ namespace BookStore
             }
             return table;
         }
-        //public static bool Change(string idString, string name)
-        //{
-        //    try
-        //    {
-        //        int id = Convert.ToInt32(idString);
-        //        string item = publishers[id];
-        //        if (item != name)
-        //        {
-        //            publishers[id] = name;
-        //            return true;
-        //        }
-        //    }
-        //    catch (FormatException) { }
-        //    catch (ArgumentOutOfRangeException) { }
-        //    return false;
-        //}
+        public static bool Change(string idString)
+        {
+            try
+            {
+                int id = int.Parse(idString);
+                string[] item = books[id];
+                for (int i = 0; i < item.Length; i++)
+                    item[i] = Interface.Read(Interface.bookParams[i]);
+                Console.WriteLine();
+            }
+            catch (FormatException) { }
+            catch (ArgumentOutOfRangeException) { }
+            return false;
+        }
         public static bool Remove(string idString)
         {
             try

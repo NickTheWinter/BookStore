@@ -10,6 +10,7 @@ namespace BookStore
     {
         static void Main(string[] args)
         {
+            Console.SetWindowSize(150, 30);
             Authors.Add("Дебил");
             Books.Add(new string[] { "Название", "Автор", "Цена", "Издатель", "Год", "Кол-во страниц" });
             Interface.MainWrite();
@@ -23,7 +24,7 @@ namespace BookStore
             //Console.WriteLine(Authors.Add("педик! вф"));
             //Console.WriteLine(Authors.Add("педик !-вф"));
             //Console.WriteLine(Authors.Add("педик -вф"));
-            
+
             //Console.WriteLine(Authors.Add("педик--вф"));
             //Console.WriteLine(Authors.Add("педик--вф цуфа"));
             //Console.WriteLine(Authors.Add("педик- -вф"));
@@ -39,7 +40,7 @@ namespace BookStore
             //{
             //    Console.WriteLine(Books.Add(new string[] {random.Next(1000).ToString(), random.Next(1000).ToString(), random.Next(1000).ToString(), random.Next(1000).ToString(), random.Next(1000).ToString(), random.Next(1000).ToString()}));
             //}
-            //Console.WriteLine(Books.Read());
+            Console.WriteLine(Books.Read());
             Console.ReadLine();
         }
     }

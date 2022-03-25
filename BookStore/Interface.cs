@@ -32,15 +32,17 @@ namespace BookStore
                              "3. Изменение.\n" +
                              "4. Удаление.\n" +
                              "Enter. Вернуться назад.\n";
-        static string[] bookParams = { "\nНазвание книги", "Автор", "Цена", "Издательство", "Год издания", "Кол-во страниц" };
-        static string Read(string text)
+        public static string[] bookParams = { "Название книги", "Автор", "Цена", "Издательство", "Год издания", "Страниц" };
+        static string[] booksTitle = { "\tСтрока\t|", "\tНазвание\t|", "\tАвтор\t|", "\tЦена\t|", "\tИздатель\t|", "\tГод\t|", "\tСтраниц\n" };
+                                      static string tableSeparator ="---------------------------------------------------------------------------------------------------------------------------------------------------";
+        public static string Read(string text)
         {
-            Console.Write($"{text}:> ");
+            Console.Write($"{text}: ");
             return Console.ReadLine();
         }
         static string Read()
         {
-            Console.Write("> ");
+            Console.Write(": ");
             return Console.ReadLine();
         }
         static void WriteHeader(string list)
@@ -85,6 +87,10 @@ namespace BookStore
                     }
                     else if (mainChoice == "2")
                     {
+                        foreach (string item in booksTitle)
+                        {
+                            Console.Write(item);
+                        }
                         Console.WriteLine(Books.Read()); 
                         level = 1;
                         Read();
@@ -143,19 +149,41 @@ namespace BookStore
                                 Persons.Change(Read(), Read());
                                 break;
                         }
-                        FuncWrite();
+                        
                     }
                     else if (mainChoice == "2")
                     {
-                        string[] book = new string[6];
-                        for (int i = 0; i < book.Length; i++)
-                            book[i] = Read(bookParams[i]);
-                        Console.WriteLine();
-                        Books.Add(book);
+                        Console.WriteLine("\nВведите номер изменяемой строки.\n");
+                        Books.Change(Read());
                     }
+                    FuncWrite();
                     break;
                 case "4":
+                    if (mainChoice == "1")
+                    {
+                        switch (secondChoice)
+                        {
+                            case "1":
+                                Console.WriteLine($"\nВведите номер строки для удаления.\n");
+                                Authors.Remove(Read());
+                                break;                                     
+                            case "2":                                      
+                                Console.WriteLine($"\nВведите номер строки для удаления.\n");
+                                Publishers.Remove(Read());         
+                                break;                                     
+                            case "3":                                      
+                                Console.WriteLine($"\nВведите номер строки для удаления.\n");
+                                Persons.Remove(Read());
+                                break;
+                        }
 
+                    }
+                    else if (mainChoice == "2")
+                    {
+                        Console.WriteLine("\nВведите номер строки для удаления.\n");
+                        Books.Remove(Read());
+                    }
+                    FuncWrite();
                     break;
                 default:
                     FuncWrite();
