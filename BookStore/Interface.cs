@@ -85,8 +85,10 @@ namespace BookStore
                     }
                     else if (mainChoice == "2")
                     {
-                        Books.Read();
+                        Console.WriteLine(Books.Read()); 
                         level = 1;
+                        Read();
+                        FuncWrite();
                     }
                     break;
                 case "2":
@@ -120,6 +122,7 @@ namespace BookStore
                         Console.WriteLine();
                         Books.Add(book);
                         level = 1;
+                        FuncWrite();
                     }
                     break;
                 case "3":
