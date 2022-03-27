@@ -10,7 +10,9 @@ namespace BookStore
     {
         static void Main(string[] args)
         {
+            Database.Initialize();
             Interface.Initialize();
+            Database.Deinitialize();
         }
     }
 }

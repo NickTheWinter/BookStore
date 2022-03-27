@@ -3,6 +3,7 @@ using System.Diagnostics;
 using static System.Console;
 using static System.Convert;
 using static System.Math;
+using static BookStore.StoredData;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,44 +22,76 @@ namespace BookStore
             SetWindowSize(width, height);
             MainList();
         }
-        static string header = "-----БАЗА ДАННЫХ: КНИЖНЫЙ МАГАЗИН-----\n\n" +
-                               "Для использования функций необходимо ввести соответствующую " +
-                               "цифру на клавиатуре.\n";
-        static string mainList = "Основные объекты программы:\n" +
-                                 "1. Перечисления.\n" +
-                                 "2. Список книг.\n" +
-                                 "3. Приобретение книг.\n" +
-                                 "4. Продажа книг.\n" +
-                                 "Enter. Вернуться назад.\n";
-        static string enumList = "Список перечислений:\n" +
-                                 "1. Авторы.\n" +
-                                 "2. Издательства.\n" +
-                                 "3. Физические лица.\n" +
-                                 "Enter. Вернуться назад.\n";
-        static string funcList = "Функции:\n" +
-                                 "1. Создание.\n" +
-                                 "2. Просмотр.\n" +
-                                 "3. Выборка.\n" +
-                                 "4. Изменение.\n" +
-                                 "5. Удаление.\n" +
-                                 "Enter. Вернуться назад.\n";
-        public static string[] bookParams = { "Название книги", "Автор", "Цена", "Издательство", "Год издания", "Страниц" };
-        static string[] booksTitle = { "\tСтрока\t|", "\tНазвание\t|", "\tАвтор\t|", "\tЦена\t|", "\tИздатель\t|", "\tГод\t|", "\tСтраниц\n" };
         static string Input()
         {
-            Write("\t> ");
-            return ReadLine();
+            Write($"{next}\n\t> ");
+            return ReadKey().ToString();
         }
         static string Input(string text)
         {
-            Write($"{text}\n\t> ");
+            Write($"\n{text}\n\t> ");
             return ReadLine();
+        }
+        static List<string> InputList()
+        {
+            Clear();
+            OutputHeader();
+            List<string> entry = new List<string>();
+            switch (choice)
+            {
+                case "111":
+                case "121":
+                case "131":
+                    entry.Add(Input(nameInput));
+                    break;
+                case "201":
+                    foreach (string s in booksElementFields)
+                        entry.Add(Input(s));
+                    break;
+                case "301":
+                case "401":
+                    foreach (string s in movesElementFields)
+                        entry.Add(Input(s));
+                    break;
+                case "113":
+                case "123":
+                case "133":
+                case "114":
+                case "124":
+                case "134":
+                    foreach (string s in enumFields)
+                        entry.Add(Input(s));
+                    break;
+                case "203":
+                case "204":
+                    foreach (string s in booksFields)
+                        entry.Add(Input(s));
+                    break;
+                case "303":
+                case "403":
+                case "304":
+                case "404":
+                    foreach (string s in movesFields)
+                        entry.Add(Input(s));
+                    break;
+            }
+            return entry;
         }
         static string Input(out string input)
         {
             Write("\t> ");
             input = ReadLine();
             return input;
+        }
+        static void Next()
+        {
+            Input();
+            FuncList();
+        }
+        static void OutputHeader()
+        {
+            Clear();
+            WriteLine(header);
         }
         static void OutputHeader(string list)
         {
@@ -129,21 +162,32 @@ namespace BookStore
                     ReturnTo();
                     break;
                 case "1":
+                    Result(Database.Add(choice, InputList()));
                     break;
                 case "2":
-                    WriteLine(Database.Read(choice.Substring(1, 2)));
-                    Input("Enter. Что бы продолжить.");
+                    Result(Database.Read(choice));
                     break;
                 case "3":
+                    Result(Database.Select(choice, InputList()));
                     break;
                 case "4":
+                    Result(Database.Change(choice, InputList()));
                     break;
                 case "5":
+                    Clear();
+                    OutputHeader();
+                    Result(Database.Remove(choice, Input(idInput)));
                     break;
                 default:
                     FuncList();
                     break;
             }
+        }
+        static void Result(string text)
+        {
+            OutputHeader();
+            WriteLine(text);
+            Next();
         }
     }
 }
