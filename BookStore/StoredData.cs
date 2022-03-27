@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace BookStore
 {
-    internal class Program
+    internal class StoredData
     {
-        static void Main(string[] args)
-        {
-            Interface.Initialize();
-        }
+        public static char separator = '⁂';
+        public static string[] authorsHeader = { "ID", "ФИО" };
     }
 }

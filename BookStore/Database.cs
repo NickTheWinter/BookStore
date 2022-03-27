@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using static BookStore.StoredData;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +10,27 @@ namespace BookStore
 {
     internal class Database
     {
-
+        public static string Read(string choice)
+        {
+            List<string[]> tableList = new List<string[]>();
+            switch (choice)
+            {
+                case "01":
+                    break;
+                case "02":
+                    break;
+                case "03":
+                    break;
+                case "12":
+                    tableList = Authors.Read();
+                    break;
+                case "22":
+                    break;
+                case "32":
+                    break;
+            }
+            return Templates.Enum(tableList);
+        }
     }
     internal class CheckConstraints
     {
@@ -129,8 +151,16 @@ namespace BookStore
     internal class Authors
     {
         static List<string> authors = new List<string>();
+        static string[] Element(string item) =>
+            new string[] { IndexOf(item), item };
         public static bool Contains(string item) =>
             authors.Contains(item);
+        static string IndexOf(string item) =>
+            authors.IndexOf(item).ToString();
+        public static void Import(string import) =>
+            authors = Templates.ToImport(import);
+        public static string Export() =>
+            Templates.ToExport(authors);
         public static bool Add(string name)
         {
             if (CheckConstraints.CorrectName(name, out name) & !Contains(name))
@@ -140,14 +170,14 @@ namespace BookStore
             }
             return false;
         }
-        public static string Read() =>
+        public static List<string[]> Read() =>
             Select("", "");
-        public static string Select(string id, string set)
+        public static List<string[]> Select(string id, string set)
         {
-            string table = "";
+            List<string[]> table = new List<string[]>() { authorsHeader };
             foreach (string item in authors)
-                if (authors.IndexOf(item).ToString().Contains(id) & item.ToLower().Contains(set.ToLower()))
-                    table += Templates.Enum(item, authors);
+                if (IndexOf(item).Contains(id) & Strings.Contains(item, set))
+                    table.Add(Element(item));
             return table;
         }
         public static bool Change(string idString, string name)
@@ -162,14 +192,8 @@ namespace BookStore
                     return true;
                 }
             }
-            catch (FormatException)
-            {
-
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-
-            }
+            catch (FormatException) { }
+            catch (ArgumentOutOfRangeException) { }
             return false;
         }
         public static bool Remove(string idString)
@@ -180,14 +204,8 @@ namespace BookStore
                 authors.RemoveAt(id);
                 return true;
             }
-            catch (FormatException)
-            {
-
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-
-            }
+            catch (FormatException) { }
+            catch (ArgumentOutOfRangeException) { }
             return false;
         }
     }
@@ -205,7 +223,7 @@ namespace BookStore
             }
             return false;
         }
-        public static string Read() =>
+        /*public static string Read() =>
             Select("", "");
         public static string Select(string id, string set)
         {
@@ -214,7 +232,7 @@ namespace BookStore
                 if (persons.IndexOf(item).ToString().Contains(id) & item.ToLower().Contains(set.ToLower()))
                     table += Templates.Enum(item, persons);
             return table;
-        }
+        }*/
         public static bool Change(string idString, string name)
         {
             try
@@ -258,7 +276,7 @@ namespace BookStore
             }
             return false;
         }
-        public static string Read() =>
+        /*public static string Read() =>
             Select("", "");
         public static string Select(string id, string set)
         {
@@ -267,7 +285,7 @@ namespace BookStore
                 if (publishers.IndexOf(item).ToString().Contains(id) & item.ToLower().Contains(set.ToLower()))
                     table += Templates.Enum(item, publishers);
             return table;
-        }
+        }*/
         public static bool Change(string idString, string name)
         {
             try
@@ -299,7 +317,10 @@ namespace BookStore
     }
     internal class Books
     {
-        static List<string[]> books = new List<string[]>();
+        static List<string[]> books = new List<string[]>()
+        {
+            new string[] { "Название", "Автор", "Цена", "Издательство", "Год издание", "Количество страниц" }
+        };
         public static bool CorrectEntry(string[] entry)
         {
             if (Authors.Contains(entry[1]) &
@@ -314,8 +335,8 @@ namespace BookStore
         {
             //if (CorrectEntry(entry))
             //{
-                books.Add(entry);
-                return true;
+            books.Add(entry);
+            return true;
             //}
             //return false;
         }
@@ -343,8 +364,8 @@ namespace BookStore
             {
                 int id = int.Parse(idString);
                 string[] item = books[id];
-                for (int i = 0; i < item.Length; i++)
-                    item[i] = Interface.Read(Interface.bookParams[i]);
+                /*for (int i = 0; i < item.Length; i++)
+                    item[i] = Interface.Read(Interface.bookParams[i]);*/
                 Console.WriteLine();
             }
             catch (FormatException) { }

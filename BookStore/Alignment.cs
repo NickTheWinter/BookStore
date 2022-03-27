@@ -8,12 +8,11 @@ namespace BookStore
 {
     internal class Alignment
     {
-        public static string Id(string item, List<string> list)
+        public static string Id(string text, int length)
         {
-            string id = list.IndexOf(item).ToString();
-            for (int i = id.Length; i < list.Count.ToString().Length; i++)
-                id += " ";
-            return id;
+            for (int i = text.Length; i < length; i++)
+                text += " ";
+            return text;
         }
         public static string Id(string[] item, List<string[]> list)
         {
