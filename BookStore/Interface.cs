@@ -1,13 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using static System.Console;
 using static System.Convert;
 using static System.Math;
 using static BookStore.StoredData;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore
 {
@@ -187,6 +182,7 @@ namespace BookStore
         {
             OutputHeader();
             WriteLine(text);
+            TraceLog.WriteLog(text);
             Next();
         }
     }

@@ -1,10 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using static BookStore.StoredData;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore
 {
@@ -19,6 +16,7 @@ namespace BookStore
             Books.Import(import[3].Split(separatorRow));
             Buy.Import(import[4].Split(separatorRow));
             Sell.Import(import[5].Split(separatorRow));
+            TraceLog.WriteLog($"Данные были перенесены из файлов.\n");
         }
         public static void Deinitialize()
         {
@@ -32,6 +30,7 @@ namespace BookStore
                 Sell.Export()
             };
             Files.Initialize(export);
+            TraceLog.WriteLog($"Данные были перенесены в файлы.\nЗавершение работы программы.");
         }
         public static string Add(string choice, List<string> entry)
         {
@@ -57,17 +56,17 @@ namespace BookStore
             switch (choice)
             {
                 case "112":
-                    return Templates.Enum(Authors.Read());
+                    return Templates.Enum(choice, "Авторы", Authors.Read());
                 case "122":
-                    return Templates.Enum(Persons.Read());
+                    return Templates.Enum(choice, "Физические лица", Persons.Read());
                 case "132":
-                    return Templates.Enum(Publishers.Read());
+                    return Templates.Enum(choice, "Издательства", Publishers.Read());
                 case "202":
-                    return Templates.Books(Books.Read());
+                    return Templates.Table(choice, "Книги", Books.Read());
                 case "302":
-                    return Templates.Books(Buy.Read());
+                    return Templates.Table(choice, "Приобретение книг", Buy.Read());
                 case "402":
-                    return Templates.Books(Sell.Read());
+                    return Templates.Table(choice, "Продажа книг", Sell.Read());
             }
             return choice;
         }
@@ -76,17 +75,17 @@ namespace BookStore
             switch (choice)
             {
                 case "113":
-                    return Templates.Enum(Authors.Select(entry[0], entry[1]));
+                    return Templates.Enum(choice, "Авторы", Authors.Select(entry[0], entry[1]));
                 case "123":
-                    return Templates.Enum(Persons.Select(entry[0], entry[1]));
+                    return Templates.Enum(choice, "Физические лица", Persons.Select(entry[0], entry[1]));
                 case "133":
-                    return Templates.Enum(Publishers.Select(entry[0], entry[1]));
+                    return Templates.Enum(choice, "Издательства", Publishers.Select(entry[0], entry[1]));
                 case "203":
-                    return Templates.Books(Books.Select(entry));
+                    return Templates.Table(choice, "Книги", Books.Select(entry));
                 case "303":
-                    return Templates.Books(Buy.Read());
+                    return Templates.Table(choice, "Приобретение книг", Buy.Read());
                 case "403":
-                    return Templates.Books(Sell.Read());
+                    return Templates.Table(choice, "Продажа книг", Sell.Read());
             }
             return choice;
         }

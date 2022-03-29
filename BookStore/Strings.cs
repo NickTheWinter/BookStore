@@ -1,9 +1,6 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using static BookStore.StoredData;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore
 {
@@ -49,16 +46,34 @@ namespace BookStore
                 export += string.Join(separator.ToString(), item) + separatorRow;
             return export;
         }
-        public static string Enum(List<string[]> list)
+        public static string Enum(string choice, string name, List<string[]> list)
         {
             string table = "";
+            switch (choice[2])
+            {
+                case '2':
+                    table = $"Результат чтения из перечисления '{name}':\n\n";
+                    break;
+                case '3':
+                    table = $"Результат выборки из перечисления '{name}':\n\n";
+                    break;
+            }
             foreach (string[] item in list)
                 table += $"\t{Alignment(item[0], Longest(list, 0))}\t|\t{item[1]}\n";
             return table;
         }
-        public static string Books(List<string[]> list)
+        public static string Table(string choice, string name, List<string[]> list)
         {
             string table = "";
+            switch (choice[2])
+            {
+                case '2':
+                    table = $"Результат чтения из таблицы '{name}':\n\n";
+                    break;
+                case '3':
+                    table = $"Результат выборки из таблицы '{name}':\n\n";
+                    break;
+            }
             foreach (string[] item in list)
                 table += $"\t{Alignment(item[0], Longest(list, 0))}\t|\t{Alignment(item[1], Longest(list, 1))}\t|" +
                          $"\t{Alignment(item[2], Longest(list, 2))}\t|\t{Alignment(item[3], Longest(list, 3))}\t|" +
@@ -68,7 +83,7 @@ namespace BookStore
         }
         public static string AddSucces(string name, string[] item)
         {
-            string message = $"В таблицу {name} был добавлен элемент '";
+            string message = $"В таблицу '{name}' был добавлен элемент '";
             foreach (string s in item)
                 message += $"{s}, ";
             return $"{message.Substring(0, message.Length - 2)}'.\n";
@@ -78,7 +93,7 @@ namespace BookStore
             string message = $"Элемент '";
             foreach (string s in pastItem)
                 message += $"{s}, ";
-            message = $"{message.Substring(0, message.Length - 2)}' таблицы {name} был изменен на '";
+            message = $"{message.Substring(0, message.Length - 2)}' таблицы '{name}' был изменен на '";
             foreach (string s in item)
                 message += $"{s}, ";
             return $"{message.Substring(0, message.Length - 2)}'.\n";
@@ -88,7 +103,7 @@ namespace BookStore
             string message = $"Элемент '";
             foreach (string s in item)
                 message += $"{s}, ";
-            return $"{message.Substring(0, message.Length - 2)}' таблицы {name} был удален.\n";
+            return $"{message.Substring(0, message.Length - 2)}' таблицы '{name}' был удален.\n";
         }
         static int Longest(List<string[]> list, int num)
         {
