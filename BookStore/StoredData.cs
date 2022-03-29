@@ -30,22 +30,23 @@ namespace BookStore
                                         "Enter. Вернуться назад.\n";
         public static string idInput = "Введите ID.";
         public static string nameInput = "Введите наименование.";
+        public static string bookNameInput = "Введите наименование книги.";
         public static string authorInput = "Введите имя автора.";
         public static string priceInput = "Введите цену книги.";
         public static string publisherInput = "Введите наименование издательства.";
         public static string yearInput = "Введите год издания.";
         public static string countInput = "Введите количество страниц.";
-        public static string personInput = "Введите имя физ. лица.";
+        public static string personInput = "Введите имя физического лица.";
         public static string numberInput = "Введите количество книг.";
         public static string amountInput = "Введите обзую стоимость.";
         public static string dateInput = "Введите дату.";
         public static string[] enumFields = { idInput, nameInput };
-        public static string[] booksElementFields = { nameInput, authorInput, priceInput, publisherInput, yearInput, countInput };
+        public static string[] booksElementFields = { bookNameInput, authorInput, priceInput, publisherInput, yearInput, countInput };
         public static string[] movesElementFields = { personInput, nameInput, numberInput };
         public static string[] booksFields = { idInput, nameInput, authorInput, priceInput, publisherInput, yearInput, countInput };
-        public static string[] movesFields = { idInput, personInput, nameInput, numberInput, priceInput, amountInput, dateInput };
+        public static string[] movesFields = { idInput, personInput, bookNameInput, numberInput, priceInput, amountInput, dateInput };
         public static string next = "Нажмите любую клавишу, что бы продолжить.";
-        public static string notEdited = "\nВведены неверные денные!\n" +
+        public static string notEdited = "Введены неверные денные!\n" +
                                          "Повторите еще раз.\n";
         public static string[] authorsHeader = { "ID", "ФИО" };
         public static string[] personsHeader = { "ID", "ФИО" };

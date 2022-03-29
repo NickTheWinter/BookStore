@@ -30,7 +30,7 @@ namespace BookStore
                 Sell.Export()
             };
             Files.Initialize(export);
-            TraceLog.WriteLog($"Данные были перенесены в файлы.\nЗавершение работы программы.");
+            TraceLog.WriteLog($"Данные были перенесены в файлы.\nЗавершение работы программы.\n");
         }
         public static string Add(string choice, List<string> entry)
         {

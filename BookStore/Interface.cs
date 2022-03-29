@@ -182,7 +182,8 @@ namespace BookStore
         {
             OutputHeader();
             WriteLine(text);
-            TraceLog.WriteLog(text);
+            if (choice[2].ToString() != "2" & choice[2].ToString() != "3")
+                TraceLog.WriteLog(text);
             Next();
         }
     }
